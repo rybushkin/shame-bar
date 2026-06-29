@@ -28,11 +28,11 @@
   .ig-tile:hover svg{color:#E4513C;}
   .ig-tile .ig-h{position:absolute;left:12px;bottom:10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#8E8E8E;}
   /* Intro loader */
-  #shame-loader{position:fixed;inset:0;z-index:9999;background:#0F0F10;display:flex;align-items:center;justify-content:center;animation:loader-hide .65s ease 1.9s forwards;}
+  #shame-loader{position:fixed;inset:0;z-index:9999;background:#0F0F10;display:flex;align-items:center;justify-content:center;animation:loader-hide .8s ease 1.5s forwards;}
   #shame-loader .lw{position:relative;}
-  #shame-loader .lw span{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(64px,15vw,220px);line-height:1;letter-spacing:-0.03em;}
+  #shame-loader .lw span{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(24px,4vw,40px);line-height:1;letter-spacing:0.24em;text-indent:0.24em;}
   #shame-loader .lw .lw-out{color:transparent;-webkit-text-stroke:1px #3a201d;}
-  #shame-loader .lw .lw-fill{position:absolute;inset:0;color:#E4513C;clip-path:inset(0 100% 0 0);animation:loader-fill 1.45s cubic-bezier(.5,0,.2,1) .15s forwards;}
+  #shame-loader .lw .lw-fill{position:absolute;inset:0;color:#E4513C;clip-path:inset(0 100% 0 0);animation:loader-fill 1.05s cubic-bezier(.5,0,.2,1) .2s forwards;}
   @keyframes loader-fill{to{clip-path:inset(0 0 0 0)}}
   @keyframes loader-hide{to{opacity:0;visibility:hidden}}
   @media (prefers-reduced-motion: reduce){#shame-loader{animation-delay:.4s}#shame-loader .lw .lw-fill{animation-duration:.4s}}
@@ -392,15 +392,21 @@
 
 <script>
 (function () {
-  // --- Intro loader: CSS handles the reveal; this is a guaranteed dismissal net ---
+  // --- Intro loader: small reddening wordmark, then calm fade reveal of content ---
   var loaderEl = document.getElementById('shame-loader');
+  var rootEl = document.getElementById('shame-root');
+  var reduceL = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (loaderEl && rootEl && !reduceL) {
+    rootEl.style.opacity = '0';
+    rootEl.style.transition = 'opacity 1.1s ease';
+  }
   if (loaderEl) {
-    var reduceL = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     setTimeout(function () {
       loaderEl.style.opacity = '0';
       loaderEl.style.visibility = 'hidden';
-      setTimeout(function () { loaderEl.style.display = 'none'; }, 700);
-    }, reduceL ? 600 : 2700);
+      if (rootEl) rootEl.style.opacity = '1';
+      setTimeout(function () { loaderEl.style.display = 'none'; }, 900);
+    }, reduceL ? 500 : 1900);
   }
 
   var root = document.getElementById('shame-root');
