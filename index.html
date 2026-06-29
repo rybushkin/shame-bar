@@ -36,6 +36,11 @@
   @keyframes loader-fill{to{clip-path:inset(0 0 0 0)}}
   @keyframes loader-hide{to{opacity:0;visibility:hidden}}
   @media (prefers-reduced-motion: reduce){#shame-loader{animation-delay:.4s}#shame-loader .lw .lw-fill{animation-duration:.4s}}
+  /* Hero marquee — текст-маска по фото бара + лёгкая красная пульсация */
+  .shame-hero-mq{animation:shame-marquee 30s linear infinite, shame-glow 3.2s ease-in-out infinite;}
+  .shame-hero-mq > span{color:transparent;-webkit-text-fill-color:transparent;background:#F5F5F2 url('assets/bar.jpg') center 22% / cover;-webkit-background-clip:text;background-clip:text;}
+  @keyframes shame-glow{0%,100%{filter:drop-shadow(0 0 4px rgba(228,81,60,.18))}50%{filter:drop-shadow(0 0 16px rgba(228,81,60,.55))}}
+  @media (prefers-reduced-motion: reduce){.shame-hero-mq{animation:none}}
 </style>
 </head>
 <body>
@@ -80,7 +85,7 @@
     <!-- center wordmark — infinite marquee -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:6vh 0;">
       <h1 aria-label="SHAME BAR" style="margin:0 0 0 calc(50% - 50vw);width:100vw;overflow:hidden;">
-        <span aria-hidden="true" class="shame-mq" style="display:inline-flex;white-space:nowrap;animation:shame-marquee 30s linear infinite;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(84px,18vw,300px);line-height:0.9;letter-spacing:-0.03em;color:#F5F5F2;will-change:transform;">
+        <span aria-hidden="true" class="shame-mq shame-hero-mq" style="display:inline-flex;white-space:nowrap;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(84px,18vw,300px);line-height:0.9;letter-spacing:-0.03em;will-change:transform,filter;">
           <span style="padding-right:0.12em;">SHAME&nbsp;BAR&nbsp;&nbsp;✱&nbsp;&nbsp;SHAME&nbsp;BAR&nbsp;&nbsp;✱&nbsp;&nbsp;</span>
           <span style="padding-right:0.12em;">SHAME&nbsp;BAR&nbsp;&nbsp;✱&nbsp;&nbsp;SHAME&nbsp;BAR&nbsp;&nbsp;✱&nbsp;&nbsp;</span>
         </span>
