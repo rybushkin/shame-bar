@@ -27,9 +27,24 @@
   .ig-tile svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;color:#8E8E8E;transition:color .35s;}
   .ig-tile:hover svg{color:#E4513C;}
   .ig-tile .ig-h{position:absolute;left:12px;bottom:10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#8E8E8E;}
+  /* Intro loader */
+  #shame-loader{position:fixed;inset:0;z-index:9999;background:#0F0F10;display:flex;align-items:center;justify-content:center;animation:loader-hide .65s ease 1.9s forwards;}
+  #shame-loader .lw{position:relative;}
+  #shame-loader .lw span{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(64px,15vw,220px);line-height:1;letter-spacing:-0.03em;}
+  #shame-loader .lw .lw-out{color:transparent;-webkit-text-stroke:1px #3a201d;}
+  #shame-loader .lw .lw-fill{position:absolute;inset:0;color:#E4513C;clip-path:inset(0 100% 0 0);animation:loader-fill 1.45s cubic-bezier(.5,0,.2,1) .15s forwards;}
+  @keyframes loader-fill{to{clip-path:inset(0 0 0 0)}}
+  @keyframes loader-hide{to{opacity:0;visibility:hidden}}
+  @media (prefers-reduced-motion: reduce){#shame-loader{animation-delay:.4s}#shame-loader .lw .lw-fill{animation-duration:.4s}}
 </style>
 </head>
 <body>
+<div id="shame-loader" aria-hidden="true">
+  <div class="lw">
+    <span class="lw-out">SHAME</span>
+    <span class="lw-fill">SHAME</span>
+  </div>
+</div>
 <div id="shame-root" style="background:#0F0F10;color:#F5F5F2;font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden;position:relative;width:100%;">
 
   <!-- FIXED NAV (hidden until scroll) -->
@@ -377,6 +392,17 @@
 
 <script>
 (function () {
+  // --- Intro loader: CSS handles the reveal; this is a guaranteed dismissal net ---
+  var loaderEl = document.getElementById('shame-loader');
+  if (loaderEl) {
+    var reduceL = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(function () {
+      loaderEl.style.opacity = '0';
+      loaderEl.style.visibility = 'hidden';
+      setTimeout(function () { loaderEl.style.display = 'none'; }, 700);
+    }, reduceL ? 600 : 2700);
+  }
+
   var root = document.getElementById('shame-root');
   if (!root) return;
 
